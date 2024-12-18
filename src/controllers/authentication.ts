@@ -2,6 +2,8 @@ import express from "express"
 import puppeteer from 'puppeteer'
 import cheerio from 'cheerio'
 import { Jwt } from "jsonwebtoken";
+import dotenv from "dotenv"
+dotenv.config();
 import GenerateToken from "../helpers/passwordtokengenerater";
 import { crateuser,getdatabyuserid } from "../db/data";
 
@@ -22,7 +24,13 @@ export const register = async(req:express.Request,res:express.Response)=>{
             return res.status(200).json({Message:"Already Present in database sending data from database",existinguser}).end();
         }
 
-        const browser = await puppeteer.launch({ headless: true, });
+        const browser = await puppeteer.launch({ headless: true,executablePath:process.env.NODE_ENV==="production"?process.env.PUPPETEER_EXECUTABLE_PATH:puppeteer.executablePath(),args:[
+            "--disable-setuid-sandbox",
+            "--no-sandbox",
+            "--single-process",
+            "--no-zygote"
+            
+        ] });
     const page = await browser.newPage();
 
     await page.goto('https://login.gitam.edu/Login.aspx',{waitUntil:"load",timeout:600000});
