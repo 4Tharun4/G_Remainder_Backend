@@ -6,6 +6,7 @@ import dotenv from "dotenv"
 dotenv.config();
 import GenerateToken from "../helpers/passwordtokengenerater";
 import { crateuser,getdatabyuserid } from "../db/data";
+import path from "path";
 
 export const register = async(req:express.Request,res:express.Response)=>{
     try {
@@ -23,6 +24,7 @@ export const register = async(req:express.Request,res:express.Response)=>{
             await existinguser.save();
             return res.status(200).json({Message:"Already Present in database sending data from database",existinguser}).end();
         }
+        const cacheDir = path.resolve(__dirname, 'puppeteer_cache');
 
         const browser = await puppeteer.launch({ headless: true,executablePath:process.env.NODE_ENV==="production"? "/usr/bin/google-chrome-stable":puppeteer.executablePath(),args: [
             '--no-sandbox',
@@ -30,7 +32,7 @@ export const register = async(req:express.Request,res:express.Response)=>{
             '--disable-gpu',  // Disable GPU for environments that don't support it
             '--disable-software-rasterizer',  // Disable software rendering
             '--remote-debugging-port=9222', // Optional, for debugging purposes
-          ], });
+          ],userDataDir: cacheDir, });
     const page = await browser.newPage();
 
     await page.goto('https://login.gitam.edu/Login.aspx',{waitUntil:"load",timeout:600000});
