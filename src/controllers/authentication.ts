@@ -24,7 +24,7 @@ export const register = async(req:express.Request,res:express.Response)=>{
             return res.status(200).json({Message:"Already Present in database sending data from database",existinguser}).end();
         }
 
-        const browser = await puppeteer.launch({ headless: true,executablePath:process.env.NODE_ENV==="production"?process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable':puppeteer.executablePath(),args: [
+        const browser = await puppeteer.launch({ headless: true,executablePath:process.env.NODE_ENV==="production"? "/usr/bin/google-chrome-stable":puppeteer.executablePath(),args: [
             '--no-sandbox',
             '--disable-setuid-sandbox',
             '--disable-gpu',  // Disable GPU for environments that don't support it
