@@ -1,12 +1,32 @@
-FROM   ghcr.io/puppeteer/puppeteer:23.11.0
+FROM ghcr.io/puppeteer/puppeteer:23.11.0
 
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD=true \
-     PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+# Install necessary dependencies for Chromium
+RUN apt-get update && apt-get install -y \
+  wget \
+  ca-certificates \
+  fonts-liberation \
+  libappindicator3-1 \
+  libnss3 \
+  libxss1 \
+  xdg-utils \
+  --no-install-recommends
 
+# Download and install Chrome manually
+RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+  dpkg -i google-chrome-stable_current_amd64.deb && \
+  apt-get install -f
 
+# Set the correct executable path for Puppeteer
+ENV PUPPETEER_EXECUTABLE_PATH=/usr/bin/google-chrome-stable
+
+# Set the working directory
 WORKDIR /usr/src/app
-COPY  package*.json ./
+
+# Install dependencies and build the project
+COPY package*.json ./
 RUN npm ci
-COPY  . .
+COPY . .
 RUN npm run build
-CMD [ "node","dist/Server.js" ]
+
+# Start the application
+CMD ["node", "dist/Server.js"]

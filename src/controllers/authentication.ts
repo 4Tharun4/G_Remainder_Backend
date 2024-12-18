@@ -1,5 +1,5 @@
 import express from "express"
-import puppeteer from 'puppeteer'
+import puppeteer from 'puppeteer-core'
 import cheerio from 'cheerio'
 import { Jwt } from "jsonwebtoken";
 import dotenv from "dotenv"
@@ -24,13 +24,13 @@ export const register = async(req:express.Request,res:express.Response)=>{
             return res.status(200).json({Message:"Already Present in database sending data from database",existinguser}).end();
         }
 
-        const browser = await puppeteer.launch({ headless: true,executablePath:process.env.NODE_ENV==="production"?process.env.PUPPETEER_EXECUTABLE_PATH:puppeteer.executablePath(),args:[
-            "--disable-setuid-sandbox",
-            "--no-sandbox",
-            "--single-process",
-            "--no-zygote"
-            
-        ] });
+        const browser = await puppeteer.launch({ headless: true,executablePath:process.env.NODE_ENV==="production"?process.env.PUPPETEER_EXECUTABLE_PATH || '/usr/bin/google-chrome-stable':puppeteer.executablePath(),args: [
+            '--no-sandbox',
+            '--disable-setuid-sandbox',
+            '--disable-gpu',  // Disable GPU for environments that don't support it
+            '--disable-software-rasterizer',  // Disable software rendering
+            '--remote-debugging-port=9222', // Optional, for debugging purposes
+          ], });
     const page = await browser.newPage();
 
     await page.goto('https://login.gitam.edu/Login.aspx',{waitUntil:"load",timeout:600000});

@@ -45,6 +45,7 @@
     "mongodb": "^6.12.0",
     "mongoose": "^8.9.1",
     "node-cron": "^3.0.3",
-    "puppeteer": "^23.11.0"
+    "puppeteer": "^23.11.0",
+     "puppeteer-core": "^23.11.0"
   }
 }

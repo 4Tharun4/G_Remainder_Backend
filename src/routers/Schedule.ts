@@ -1,4 +1,4 @@
-import puppeteer from 'puppeteer';
+import puppeteer from 'puppeteer-core';
 import { getdata, updateUserData } from '../db/data'; // Import necessary database functions
 import verifyToken from '../helpers/VerifyPasswordToken';
 
