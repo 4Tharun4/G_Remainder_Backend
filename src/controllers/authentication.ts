@@ -22,7 +22,7 @@ export const register = async(req:express.Request,res:express.Response)=>{
             return res.status(200).json({Message:"Already Present in database sending data from database",existinguser}).end();
         }
 
-        const browser = await puppeteer.launch({ headless: true });
+        const browser = await puppeteer.launch({ headless: true,executablePath: '/path/to/Chrome' });
     const page = await browser.newPage();
 
     await page.goto('https://login.gitam.edu/Login.aspx',{waitUntil:"load",timeout:600000});
