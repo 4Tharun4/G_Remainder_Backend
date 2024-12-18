@@ -1,8 +1,8 @@
-FROM ghcr.io/puppeteer/puppeteer:23.11.0
+# Use a Node.js base image
+FROM node:18
 
-# Install necessary dependencies for running puppeteer in a headless environment
-RUN apt-get update && \
-    apt-get install -y \
+# Install dependencies for Puppeteer and other necessary libraries
+RUN apt-get update && apt-get install -y \
     wget \
     ca-certificates \
     fonts-liberation \
@@ -13,19 +13,20 @@ RUN apt-get update && \
     --no-install-recommends && \
     rm -rf /var/lib/apt/lists/*
 
+# Set the working directory
 WORKDIR /usr/src/app
 
-# Copy the package.json and package-lock.json first to leverage Docker's cache
+# Copy the package.json and package-lock.json to leverage Docker caching
 COPY package*.json ./
 
 # Install dependencies
 RUN npm ci
 
-# Copy the rest of your app's source code
+# Copy the rest of the application
 COPY . .
 
 # Build the app
 RUN npm run build
 
-# Start the app
+# Run the app
 CMD ["node", "dist/Server.js"]
