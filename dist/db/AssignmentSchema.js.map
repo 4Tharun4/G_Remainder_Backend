@@ -1,0 +1,1 @@
+{"version":3,"file":"AssignmentSchema.js","sourceRoot":"","sources":["../../src/db/AssignmentSchema.ts"],"names":[],"mappings":";;;;;AAAA,wDAAgC;AAEhC,MAAM,gBAAgB,GAAG,IAAI,kBAAQ,CAAC,MAAM,CAAC;IACzC,eAAe,EAAC,EAAC,IAAI,EAAC,MAAM,EAAC;IAC7B,WAAW,EAAC,EAAC,IAAI,EAAC,MAAM,EAAC;IACzB,cAAc,EAAC,EAAC,IAAI,EAAC,MAAM,EAAC;CAC/B,CAAC,CAAA;AAEF,kBAAe,gBAAgB,CAAC"}
