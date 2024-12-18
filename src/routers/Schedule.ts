@@ -1,4 +1,3 @@
-import cron from 'node-cron';
 import puppeteer from 'puppeteer';
 import { getdata, updateUserData } from '../db/data'; // Import necessary database functions
 import verifyToken from '../helpers/VerifyPasswordToken';

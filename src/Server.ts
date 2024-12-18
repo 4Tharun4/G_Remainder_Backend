@@ -6,7 +6,7 @@ import bodyParser from 'body-parser'
 import http from 'http'
 import mongoose from 'mongoose'
 import routers from './routers/routers'
-import updateUserInfo from '../src/routers/Schedule'
+import updateUserInfo from './routers/Schedule'
 import corn from 'node-cron'
 import dotenv from 'dotenv'
 dotenv.config();
